@@ -57,7 +57,8 @@
       *
       * @param string $path path to include files from.
       */
-    function FeedParserFactory( $path='' )
+  //function FeedParserFactory( $path='' )
+    function __construct( $path='' )
     {
       if( $path != '' )
       {
@@ -174,7 +175,7 @@
       */
     function _getFeed( $url )
     {
-      $req =& new HTTP_Request($url, array('allowRedirects' => true));
+      $req = new HTTP_Request($url, array('allowRedirects' => true));
       if ($this->userAgent != '')
       {
         $req->addHeader('User-Agent', $this->userAgent);
@@ -183,7 +184,7 @@
       if (!PEAR::isError($response)) {
         return $req->getResponseBody();
       } else {
-      	$this->errorStatus = array('HTTP Fetch Failed', $response->getCode(), $response->getMessage());
+          $this->errorStatus = array('HTTP Fetch Failed', $response->getCode(), $response->getMessage());
         return false;
       }
     }
@@ -210,7 +211,7 @@
         $this->errorStatus = array( 'Unable to parse XML',
                 'Error Code: '.xml_get_error_code( $xml_parser  ),
                 'Error Message: '.xml_error_string( xml_get_error_code( $xml_parser  ) )
-        		    );
+                 );
         xml_parser_free( $xml_parser );
         return false;
       }
@@ -220,7 +221,7 @@
       {
         return $this->reader;
       } else {
-      	$this->errorStatus = array( 'Unidentified feed type.', '', '' );
+          $this->errorStatus = array( 'Unidentified feed type.', '', '' );
         return false;
       }
     }

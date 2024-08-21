@@ -31,21 +31,21 @@
 // +---------------------------------------------------------------------------+
 //
 
-/** 
- * Links plugin Installation SQL  
- * 
+/**
+ * Links plugin Installation SQL
+ *
  * @package Links
  * @filesource
  * @version 1.0
  * @since GL 1.4.0
  * @copyright Copyright &copy; 2005
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @author Trinity Bays <trinity93@steubentech.com>
  * @author Tony Bibbs <tony@tonybibbs.com>
  * @author Tom Willett <twillett@users.sourceforge.net>
  * @author Blaine Lang <langmail@sympatico.ca>
  * @author Dirk Haun <dirk@haun-online.de>
- * 
+ *
  */
 
 
@@ -71,7 +71,7 @@ CREATE TABLE {$_TABLES['links']} (
   INDEX links_category(category),
   INDEX links_date(date),
   PRIMARY KEY  (lid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[] = "
@@ -84,7 +84,7 @@ CREATE TABLE {$_TABLES['linksubmission']} (
   hits int(11) default NULL,
   date datetime default NULL,
   PRIMARY KEY  (lid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 ?>

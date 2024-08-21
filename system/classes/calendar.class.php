@@ -61,7 +61,7 @@ class CalendarDay {
     * Constructur
     *
     */
-    function CalendarDay()
+    function __construct()
     {
         $this->weekendflag = false; 
         $this->holidayflag = false;
@@ -160,7 +160,7 @@ class Calendar {
     * Initializes calendar object
     *
     */
-    function Calendar()
+    function __construct()
     {
         $this->setRollingMode(false);
         $dateArray = getdate(time());

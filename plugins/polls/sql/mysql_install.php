@@ -40,7 +40,7 @@ CREATE TABLE {$_TABLES['pollanswers']} (
   votes mediumint(8) unsigned default NULL,
   remark varchar(255) NULL,
   PRIMARY KEY  (qid,aid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[] = "
@@ -64,7 +64,7 @@ CREATE TABLE {$_TABLES['pollquestions']} (
   INDEX pollquestions_commentcode(commentcode),
   INDEX pollquestions_statuscode(statuscode),
   PRIMARY KEY  (qid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[] = "
@@ -74,7 +74,7 @@ CREATE TABLE {$_TABLES['pollvoters']} (
   ipaddress varchar(15) NOT NULL default '',
   date int(10) unsigned default NULL,
   PRIMARY KEY  (id)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[] = "INSERT INTO {$_TABLES['pollanswers']} (qid, aid, answer, votes) VALUES ('geeklogfeaturepoll',1,'Trackbacks',0) ";

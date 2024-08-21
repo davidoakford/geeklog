@@ -90,7 +90,7 @@ class downloader
     * Constructor
     *
     */
-    function downloader()
+    function __construct()
     {
         $this->_errors = array();
         $this->_warnings = array();

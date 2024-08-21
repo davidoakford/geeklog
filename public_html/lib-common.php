@@ -90,7 +90,7 @@ if( function_exists('set_error_handler') )
 * Make sure to include the name of the config file,
 * i.e. the path should end in .../config.php
 */
-require_once( '/path/to/geeklog/config.php' );
+require_once( 'g:/www/apache24/htdocs/geeklog-1.4.1/config.php' );
 
 // Before we do anything else, check to ensure site is enabled
 
@@ -5177,10 +5177,10 @@ function COM_getTopicSQL( $type = 'WHERE', $u_id = 0, $table = '' )
 */
 function COM_stripslashes( $text )
 {
-    if( get_magic_quotes_gpc() == 1 )
-    {
-        return( stripslashes( $text ));
-    }
+//  if( get_magic_quotes_gpc() == 1 )
+//  {
+//      return( stripslashes( $text ));
+//  }
 
     return( $text );
 }
@@ -5688,8 +5688,14 @@ function COM_convertDate2Timestamp( $date, $time = '' )
             }
         }
 
+        if ($atoks[0] > 999) {
+            if ($atoks[0] < 1901) {
+              $atoks[0] = 1970;
+            }
+        }
+
         $timestamp = mktime( $btoks[0], $btoks[1], $btoks[2],
-                             $atoks[1], $atoks[2], $atoks[0] );
+                             $atoks[1], $atoks[2], $atoks[0]);
     }
 
     return $timestamp;
@@ -6092,6 +6098,12 @@ function COM_truncate( $text, $maxlen, $filler = '' )
   */
 function COM_handleError($errno, $errstr, $errfile='', $errline=0, $errcontext='')
 {
+  //echo  "<br />function COM_handleError()";
+  //echo  "<br />errno:"       . $errno;
+  //echo  "<br />errstr:"      . $errstr;
+  //echo  "<br />errfile:"     . $errfile;
+  //echo  "<br />errline:"     . $errline;
+  //echo  "<br />errcontext: " . $errcontext . "<br>";
     global $_CONF, $_USER;
 
     // Handle @ operator
@@ -6176,8 +6188,8 @@ foreach( $_PLUGINS as $pi_name )
 // have scheduled tasks to perform
 if( $_CONF['cron_schedule_interval'] > 0 )
 {
-    if(( DB_getItem( $_TABLES['vars'], 'value', "name='last_scheduled_run'" )
-            + $_CONF['cron_schedule_interval'] ) <= time())
+    $gitem = DB_getItem( $_TABLES['vars'], "CASE WHEN value = '' THEN '1' ELSE value END AS value", "name='last_scheduled_run'" );
+    if(( $gitem + $_CONF['cron_schedule_interval'] ) <= time())
     {
         DB_query( "UPDATE {$_TABLES['vars']} SET value=UNIX_TIMESTAMP() WHERE name='last_scheduled_run'" );
         PLG_runScheduledTask();

@@ -19,7 +19,7 @@ class BaseAdmin {
      * 
      * @access public 
      */
-    function BaseAdmin()
+    function __construct()
     {
     } 
 

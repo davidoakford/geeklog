@@ -63,7 +63,7 @@ CREATE TABLE {$_TABLES['events']} (
   INDEX events_datestart(datestart),
   INDEX events_dateend(dateend),
   PRIMARY KEY  (eid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[] = "
@@ -85,7 +85,7 @@ CREATE TABLE {$_TABLES['eventsubmission']} (
   timestart time default NULL,
   timeend time default NULL,
   PRIMARY KEY  (eid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[] = "
@@ -115,7 +115,7 @@ CREATE TABLE {$_TABLES['personal_events']} (
   timestart time default NULL,
   timeend time default NULL,
   PRIMARY KEY  (eid,uid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[] = "INSERT INTO {$_TABLES['eventsubmission']} (eid, title, description, location, datestart, dateend, url, allday, zipcode, state, city, address2, address1, event_type, timestart, timeend) VALUES ('2006051410130162','Installed the Calendar plugin','Today, you successfully installed the Calendar plugin.','Your webserver',CURDATE(),CURDATE(),'http://www.geeklog.net/',1,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL)";

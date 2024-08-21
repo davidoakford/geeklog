@@ -33,7 +33,7 @@ class SLVbase {
     /**
     * Constructor
     */
-    function SLVbase()
+    function __construct()
     {
         $this->_debug = false;
         $this->_verbose = false;

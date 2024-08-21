@@ -45,7 +45,7 @@ class FCKeditor
 	}
 	
 	// PHP 4 Contructor
-	function FCKeditor( $instanceName )
+	function __construct( $instanceName )
 	{
 		$this->__construct( $instanceName ) ;
 	}

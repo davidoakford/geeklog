@@ -57,7 +57,7 @@ function Spamx_rss($items)
 // Start of a convenience library to help RSS1.0 creation
 
 class RSSWriter {
-    function RSSWriter($uri, $title, $description, $meta = array())
+    function __construct($uri, $title, $description, $meta = array())
     {
         $this->chaninfo = array();
         $this->website = $uri;

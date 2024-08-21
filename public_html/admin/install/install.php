@@ -64,7 +64,7 @@ if (!defined ('VERSION')) {
 function php_v ()
 {
     $phpv = explode ('.', phpversion ());
-                                                                                
+
     return array ($phpv[0], $phpv[1], (int) $phpv[2]);
 }
 
@@ -412,7 +412,7 @@ function INST_getDatabaseSettings($install_type, $geeklog_path)
         } else {
             // This is a fresh MySQL installation
             $db_templates->set_var ('upgrade', 0);
-    
+
             if (innodb_supported ()) {
                 $innodb_option = '<tr><td align="left">';
                 $innodb_option .= '<p>Using InnoDB tables may improve performance on (very) large sites, but makes database backups more complicated. Leave the option unchecked unless you know what you\'re doing.</p>';
@@ -438,7 +438,7 @@ function INST_createDatabaseStructures ($use_innodb = false)
     $_DB->setDisplayError (true);
 
     // Because the create table syntax can vary from dbms-to-dbms we are
-    // leaving that up to each database driver (e.g. mysql.class.php, 
+    // leaving that up to each database driver (e.g. mysql.class.php,
     // postgresql.class.php, etc)
 
     // Get DBMS-specific create table array and data array
@@ -456,7 +456,7 @@ function INST_createDatabaseStructures ($use_innodb = false)
                 if ($use_innodb) {
                     $sql = str_replace ('MyISAM', 'InnoDB', $sql);
                 }
-            
+
                 DB_query ($sql);
             }
             if ($use_innodb) {
@@ -467,7 +467,7 @@ function INST_createDatabaseStructures ($use_innodb = false)
             foreach ($_SQL as $sql) {
                 DB_query ($sql);
             }
-            break;   
+            break;
     }
 
     // Now insert mandatory data and a small subset of initial data
@@ -500,9 +500,9 @@ function INST_createDatabaseStructures ($use_innodb = false)
 */
 function innodb_supported()
 {
-    $result = DB_query ("SHOW VARIABLES LIKE 'have_innodb'");
+//  $result = DB_query ("SHOW VARIABLES LIKE 'have_innodb'");
+    $result = DB_query ("SHOW VARIABLES LIKE 'default_storage_engine'");
     $A = DB_fetchArray ($result, true);
-
     if (strcasecmp ($A[1], 'yes') == 0) {
         $retval = true;
     } else {
@@ -1017,7 +1017,7 @@ case 1:
         $upgrade = 0;
     }
     $display .= INST_getDatabaseSettings ($_POST['install_type'],
-                                          $_POST['geeklog_path']); 
+                                          $_POST['geeklog_path']);
     break;
 
 case 2:

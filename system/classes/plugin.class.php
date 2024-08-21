@@ -53,7 +53,7 @@ class Plugin {
     var $num_searchresults = 0;
     var $searchheading = array();
     var $searchresults = array();
-    var $num_itemssearched = 0; 
+    var $num_itemssearched = 0;
     var $num_searchheadings = 0;
     /**
     * @access private
@@ -67,7 +67,9 @@ class Plugin {
     var $submissionhelpfile = '';
     var $getsubmissionssql = '';
     var $submissionheading = array();
-    
+
+    var $var_names = array();
+
 
     // PUBLIC METHODS
 
@@ -77,7 +79,7 @@ class Plugin {
     * This initializes the plugin
     *
     */
-    function Plugin()
+    function __construct()
     {
         $this->reset();
     }
@@ -98,21 +100,21 @@ class Plugin {
         $this->num_searchresults = 0;
         $this->searchresults = array();
         $this->num_itemssearched = 0;
-        $this->num_searchheadings = 0; 
+        $this->num_searchheadings = 0;
         $this->submissionlabel = '';
         $this->submissionhelpfile = '';
         $this->getsubmissionssql = '';
         $this->submissionheading = array();
         $this->supports_paging = false;
     }
-   
+
     /**
     * Adds a header that will be used in outputing search results for this
     * plugin
     *
     * @param    string      $heading    Heading label
     *
-    */ 
+    */
     function addSearchHeading($heading)
     {
         $this->num_searchheadings = $this->num_searchheadings + 1;
@@ -128,7 +130,7 @@ class Plugin {
     function addSearchResult($result_string)
     {
         $this->searchresults[] = $result_string;
-    }     
+    }
 
     /**
     * Hrm, can't remember what this does exactly
@@ -141,7 +143,7 @@ class Plugin {
         $this->submissionheading[$this->num_submissions] = $heading;
         $this->num_submissions = $this->num_submissions + 1;
     }
-    
+
     /**
     * Sets whether or not the plugin supports expanded search
     * results
@@ -156,10 +158,10 @@ class Plugin {
         if (!is_bool($switch)) {
             $switch = false;
         }
-        
+
         $this->_expandedSearchSupport = $switch;
     }
-    
+
     /**
     * Returns if plugin supports expanded searches
     *

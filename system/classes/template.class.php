@@ -66,7 +66,7 @@ class Template
   * @var       string
   * @access    public
   */
-  var $classname = "Template";
+  public $classname = "Template";
 
  /**
   * Determines how much debugging output Template will produce.
@@ -82,7 +82,7 @@ class Template
   * @var       int
   * @access    public
   */
-  var $debug    = false;
+  public $debug = false;
 
  /**
   * The base directory from which template files are loaded.
@@ -91,7 +91,7 @@ class Template
   * @access    private
   * @see       set_root
   */
-  var $root     = ".";
+  public $root  = ".";
 
  /**
   * A hash of strings forming a translation table which translates variable names
@@ -102,7 +102,7 @@ class Template
   * @access    private
   * @see       set_file
   */
-  var $file     = array();
+  public $file  = array();
 
  /**
   * A hash of strings forming a translation table which translates variable names
@@ -113,7 +113,7 @@ class Template
   * @access    private
   * @see       set_var
   */
-  var $varkeys  = array();
+  public $varkeys = array();
 
  /**
   * A hash of strings forming a translation table which translates variable names
@@ -124,7 +124,7 @@ class Template
   * @access    private
   * @see       set_var
   */
-  var $varvals  = array();
+  public $varvals = array();
 
  /**
   * Determines how to output variable tags with no assigned value in templates.
@@ -133,7 +133,7 @@ class Template
   * @access    private
   * @see       set_unknowns
   */
-  var $unknowns = "remove";
+  public $unknowns = "remove";
 
  /**
   * Determines how Template handles error conditions.
@@ -145,7 +145,7 @@ class Template
   * @access    public
   * @see       halt
   */
-  var $halt_on_error  = "yes";
+  public $halt_on_error = "yes";
 
  /**
   * The last error message is retained in this variable.
@@ -154,7 +154,7 @@ class Template
   * @access    public
   * @see       halt
   */
-  var $last_error     = "";
+  public $last_error  = "";
 
  /******************************************************************************
   * Class constructor. May be called with two optional parameters.
@@ -170,7 +170,8 @@ class Template
   * @access    public
   * @return    void
   */
-  function Template($root = ".", $unknowns = "remove") {
+//function Template($root = ".", $unknowns = "remove") {
+  function __construct($root = ".", $unknowns = "remove") {
     if ($this->debug & 4) {
       echo "<p><b>Template:</b> root = $root, unknowns = $unknowns</p>\n";
     }
@@ -269,7 +270,10 @@ class Template
       $this->file[$varname] = $this->filename($filename);
     } else {
       reset($varname);
+/* php8 removed
       while(list($v, $f) = each($varname)) {
+*/
+      foreach ($varname as $v => $f) {
         if ($this->debug & 4) {
           echo "<p><b>set_file:</b> (with array) varname = $v, filename = $f</p>\n";
         }
@@ -367,7 +371,10 @@ class Template
       }
     } else {
       reset($varname);
+/* php8 removed
       while(list($k, $v) = each($varname)) {
+*/
+      foreach ($varname as $k => $v) {
         if (!empty($k)) {
           if ($this->debug & 1) {
             printf("<b>set_var:</b> (with array) <b>%s</b> = '%s'<br>\n", $k, htmlentities($v));
@@ -387,10 +394,10 @@ class Template
  /******************************************************************************
   * This functions clears the value of a variable.
   *
-  * It may be called with either a varname as a string or an array with the 
+  * It may be called with either a varname as a string or an array with the
   * values being the varnames to be cleared.
   *
-  * The function sets the value of the variable in the $varkeys and $varvals 
+  * The function sets the value of the variable in the $varkeys and $varvals
   * hashes to "". It is not necessary for a variable to exist in these hashes
   * before calling this function.
   *
@@ -413,7 +420,10 @@ class Template
       }
     } else {
       reset($varname);
+/* php8 removed
       while(list($k, $v) = each($varname)) {
+*/
+      foreach ($varname as $k => $v) {
         if (!empty($v)) {
           if ($this->debug & 1) {
             printf("<b>clear_var:</b> (with array) <b>%s</b><br>\n", $v);
@@ -428,7 +438,7 @@ class Template
  /******************************************************************************
   * This functions unsets a variable completely.
   *
-  * It may be called with either a varname as a string or an array with the 
+  * It may be called with either a varname as a string or an array with the
   * values being the varnames to be cleared.
   *
   * The function removes the variable from the $varkeys and $varvals hashes.
@@ -455,7 +465,10 @@ class Template
       }
     } else {
       reset($varname);
+/* php8 removed
       while(list($k, $v) = each($varname)) {
+*/
+      foreach ($varname as $k => $v) {
         if (!empty($v)) {
           if ($this->debug & 1) {
             printf("<b>unset_var:</b> (with array) <b>%s</b><br>\n", $v);
@@ -495,7 +508,10 @@ class Template
 
     // quote the replacement strings to prevent bogus stripping of special chars
     reset($this->varvals);
+/* php8 removed
     while(list($k, $v) = each($this->varvals)) {
+*/
+    foreach ($this->varvals as $k => $v) {
       $varvals_quoted[$k] = preg_replace(array('/\\\\/', '/\$/'), array('\\\\\\\\', '\\\\$'), $v);
     }
 
@@ -581,7 +597,10 @@ class Template
       }
     } else {
       reset($varname);
+/* php8 removed
       while(list($i, $v) = each($varname)) {
+*/
+      foreach ($varname as $i => $v) {
         if ($this->debug & 4) {
           echo "<p><b>parse:</b> (with array) target = $target, i = $i, varname = $v, append = $append</p>\n";
         }
@@ -647,7 +666,10 @@ class Template
       echo "<p><b>get_vars:</b> constructing array of vars...</p>\n";
     }
     reset($this->varkeys);
+/* php8 removed
     while(list($k, $v) = each($this->varkeys)) {
+*/
+    foreach ($this->varkeys as $k => $v) {
       $result[$k] = $this->get_var($k);
     }
     return $result;
@@ -685,7 +707,10 @@ class Template
       return $str;
     } else {
       reset($varname);
+/* php8 removed
       while(list($k, $v) = each($varname)) {
+*/
+      foreach ($varname as $k => $v) {
         if (isset($this->varvals[$v])) {
           $str = $this->varvals[$v];
         } else {
@@ -729,7 +754,10 @@ class Template
     }
 
     reset($m);
+/* php8 removed
     while(list($k, $v) = each($m)) {
+*/
+    foreach ($m as $k => $v) {
       if (!isset($this->varkeys[$v])) {
         if ($this->debug & 4) {
          echo "<p><b>get_undefined:</b> undefined: $v</p>\n";
@@ -829,11 +857,13 @@ class Template
   * @see       set_root
   */
   function filename($filename) {
+
     if ($this->debug & 4) {
       echo "<p><b>filename:</b> filename = $filename</p>\n";
     }
+
     if (substr($filename, 0, 1) != "/") {
-      $filename = $this->root."/".$filename;
+      $filename = $this->root . "/" . $filename;
     }
 
     if (!file_exists($filename)) {

@@ -116,7 +116,7 @@
       */
     var $_currentTag;
 
-    function FeedParserBase()
+    function __construct()
     {
       $this->encoding = 'iso-8859-1';
       $title = 'Killer Feed System Feed';

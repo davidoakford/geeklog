@@ -21,7 +21,7 @@ class BaseCommand {
      * 
      * @access public 
      */
-    function BaseCommand()
+    function __construct()
     {
     } 
 

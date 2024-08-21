@@ -888,7 +888,7 @@ function storyeditor($sid = '', $mode = '', $errormsg = '', $currenttopic = '')
 * @param    int         $delete         String array of attached images to delete from article
 *
 */
-function submitstory($type='',$sid,$uid,$tid,$title,$introtext,$bodytext,$hits,$unixdate,$expiredate,$featured,$commentcode,$trackbackcode,$statuscode,$postmode,$frontpage,$draft_flag,$numemails,$owner_id,$group_id,$perm_owner,$perm_group,$perm_members,$perm_anon,$delete,$show_topic_icon,$old_sid)
+function submitstory($type,$sid,$uid,$tid,$title,$introtext,$bodytext,$hits,$unixdate,$expiredate,$featured,$commentcode,$trackbackcode,$statuscode,$postmode,$frontpage,$draft_flag,$numemails,$owner_id,$group_id,$perm_owner,$perm_group,$perm_members,$perm_anon,$delete,$show_topic_icon,$old_sid)
 {
     global $_CONF, $_TABLES, $_USER, $LANG24, $MESSAGE;
 

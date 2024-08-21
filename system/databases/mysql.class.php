@@ -38,10 +38,22 @@
 * This issue will need to be resolved some time ...
 *
 */
+function mysqli_result($res, $row=0,$col=0){
+  $numrows = mysqli_num_rows($res);
+  if ($numrows && $row <= ($numrows-1) &&  $row >= 0){
+    mysqli_data_seek($res,$row);
+    $resrow = (is_numeric($col)) ? mysqli_fetch_row($res) : mysqli_fetch_assoc($row);
+    if (isset($resrow[$col])){
+      return $resrow[$col];
+    }
+  }
+  return false;
+}
+
 class database {
 
     // PRIVATE PROPERTIES
-    
+
     /**
     * @access private
     */
@@ -117,10 +129,10 @@ class database {
         }
 
         // Connect to MySQL server
-        $this->_db = mysql_connect($this->_host,$this->_user,$this->_pass) or die('Cannot connect to DB server');
-
+      //$this->_db = mysql_connect($this->_host,$this->_user,$this->_pass) or die('Cannot connect to DB server');
+        $this->_db = mysqli_connect($this->_host,$this->_user,$this->_pass) or die('Cannot connect to DB server');
         if ($this->_mysql_version == 0) {
-            $v = mysql_get_server_info ();
+            $v = mysqli_get_server_info ($this->_db);
             preg_match ('/^([0-9]+).([0-9]+).([0-9]+)/', $v, $match);
             $v = (intval ($match[1]) * 10000) + (intval ($match[2]) * 100)
                + intval ($match[3]);
@@ -128,7 +140,8 @@ class database {
         }
 
         // Set the database
-        @mysql_select_db($this->_name) or die('error selecting database');
+      //@mysql_select_db($this->_name) or die('error selecting database');
+        @mysqli_select_db($this->_db, $this->_name) or die('error selecting database');
 
         if (!($this->_db)) {
             if ($this->isVerbose()) {
@@ -141,8 +154,12 @@ class database {
 
         if ($this->_mysql_version >= 40100) {
             if ($this->_charset == 'utf-8') {
-                @mysql_query ("SET NAMES 'utf8'", $this->_db);
+            //@mysql_query ("SET NAMES 'utf8'", $this->_db);
+              @mysqli_query ($this->_db, "SET NAMES 'utf8'");
+              echo "<p>SET NAMES to utf8</p>\n";
             }
+        } else {
+          echo "<p>mysqli_version lt 400100</p>\n";
         }
 
         if ($this->isVerbose()) {
@@ -165,7 +182,8 @@ class database {
     * @param        string      $charset    character set to use
     *
     */
-    function database($dbhost,$dbname,$dbuser,$dbpass,$errorlogfn='',$charset='')
+  //function database($dbhost,$dbname,$dbuser,$dbpass,$errorlogfn='',$charset='')
+    function __construct($dbhost,$dbname,$dbuser,$dbpass,$errorlogfn='',$charset='')
     {
         $this->_host = $dbhost;
         $this->_name = $dbname;
@@ -175,7 +193,6 @@ class database {
         $this->_errorlog_fn = $errorlogfn;
         $this->_charset = $charset;
         $this->_mysql_version = 0;
-
         $this->_connect();
     }
 
@@ -257,13 +274,16 @@ class database {
 
         // Run query
         if ($ignore_errors == 1) {
-            $result = @mysql_query($sql,$this->_db);
+          //$result = @mysql_query($sql,$this->_db);
+            $result = @mysqli_query($this->_db, $sql);
         } else {
-            $result = @mysql_query($sql,$this->_db) or die($this->dbError($sql));
+          //$result = @mysql_query($sql, $this->_db) or die($this->dbError($sql));
+            $result = @mysqli_query($this->_db, $sql) or die($this->dbError($sql));
         }
 
         // If OK, return otherwise echo error
-        if (mysql_errno() == 0 && !empty($result)) {
+      //if (mysql_errno() == 0 && !empty($result)) {
+        if (mysqli_errno($this->_db) == 0 && !empty($result)) {
             if ($this->isVerbose()) {
                 $this->_errorlog("\n***sql ran just fine***");
                 $this->_errorlog("\n*** Leaving database->dbQuery ***");
@@ -348,7 +368,7 @@ class database {
             }
         } else {
             // just regular string values, build sql
-            if (!empty($id) && ( isset($value) || $value != "")) { 
+            if (!empty($id) && ( isset($value) || $value != "")) {
                 $sql .= " WHERE $id = '$value'";
             }
         }
@@ -387,7 +407,7 @@ class database {
             $sql = "UPDATE $table SET $item_to_set = $value_to_set";
         } else {
             $sql = "UPDATE $table SET $item_to_set = '$value_to_set'";
-        } 
+        }
 
         if (is_array($id) || is_array($value)) {
             if (is_array($id) && is_array($value) && count($id) == count($value)) {
@@ -409,7 +429,7 @@ class database {
             }
         } else {
             // These are regular strings, build sql
-            if (!empty($id) && ( isset($value) || $value != "")) { 
+            if (!empty($id) && ( isset($value) || $value != "")) {
                 $sql .= " WHERE $id = '$value'";
             }
         }
@@ -465,7 +485,7 @@ class database {
                 return false;
             }
         } else {
-            if (!empty($id) && ( isset($value) || $value != "")) { 
+            if (!empty($id) && ( isset($value) || $value != "")) {
                 $sql .= " WHERE $id = '$value'";
             }
         }
@@ -526,7 +546,7 @@ class database {
                 return false;
             }
         } else {
-            if (!empty($id) && ( isset($value) || $value != "")) { 
+            if (!empty($id) && ( isset($value) || $value != "")) {
                 $sql .= " WHERE $id = '$value'";
             }
         }
@@ -558,10 +578,12 @@ class database {
         // return only if recordset exists, otherwise 0
         if ($recordset) {
             if ($this->isVerbose()) {
-                $this->_errorlog('got ' . @mysql_numrows($recordset) . ' rows');
+            //  $this->_errorlog('got ' . @mysql_numrows($recordset) . ' rows');
+                $this->_errorlog('got ' . @mysqli_numrows($recordset) . ' rows');
                 $this->_errorlog("\n*** Inside database->dbNumRows ***");
             }
-            return @mysql_numrows($recordset);
+          //return @mysql_numrows($recordset);
+            return @mysqli_num_rows($recordset);
         } else {
             if ($this->isVerbose()) {
                 $this->_errorlog("got no rows");
@@ -584,14 +606,19 @@ class database {
     {
         if ($this->isVerbose()) {
             $this->_errorlog("\n*** Inside database->dbResult ***");
-            if (empty($recordset)) {
+          //if (empty($recordset)) {
+            if (mysqli_num_rows($recordset) == 0) {
                 $this->_errorlog("\n*** Passed recordset isn't valid ***");
             } else {
                 $this->_errorlog("\n*** Everything looks good ***");
             }
             $this->_errorlog("\n*** Leaving database->dbResult ***");
         }
-        return @mysql_result($recordset,$row,$field);
+      //return @mysql_result($recordset,$row,$field);
+        @mysqli_data_seek($recordset,$row);
+        $recordset_row = @mysqli_fetch_row($recordset);
+        $recordset_row_col = $recordset_row[$field];
+        return $recordset_row_col;
     }
 
     /**
@@ -605,7 +632,8 @@ class database {
     */
     function dbNumFields($recordset)
     {
-        return @mysql_numfields($recordset);
+      //return @mysql_numfields($recordset);
+        return @mysqli_numfields($recordset);
     }
 
     /**
@@ -620,7 +648,8 @@ class database {
     */
     function dbFieldName($recordset,$fnumber)
     {
-        return @mysql_fieldname($recordset,$fnumber);
+      //return @mysql_fieldname($recordset,$fnumber);
+        return @mysqli_fieldname($recordset,$fnumber);
     }
 
     /**
@@ -634,7 +663,8 @@ class database {
     */
     function dbAffectedRows($recordset)
     {
-        return @mysql_affected_rows();
+      //return @mysql_affected_rows();
+        return @mysqli_affected_rows();
     }
 
     /**
@@ -650,11 +680,15 @@ class database {
     function dbFetchArray($recordset, $both = false)
     {
         if ($both) {
-            $result_type = MYSQL_BOTH;
+          //$result_type = MYSQL_BOTH;
+            $result_type = MYSQLI_BOTH;
         } else {
-            $result_type = MYSQL_ASSOC;
+          //$result_type = MYSQL_ASSOC;
+            $result_type = MYSQLI_ASSOC;
         }
-        return @mysql_fetch_array($recordset, $result_type);
+      //return @mysql_fetch_array($recordset, $result_type);
+        $row  = @mysqli_fetch_array($recordset, $result_type);
+        return $row;
     }
 
     /**
@@ -669,9 +703,11 @@ class database {
     function dbInsertId($link_identifier = '')
     {
         if (empty($link_identifier)) {
-            return @mysql_insert_id();
+          //return @mysql_insert_id();
+            return @mysqli_insert_id();
         } else {
-            return @mysql_insert_id($link_identifier);
+         // return @mysql_insert_id($link_identifier);
+            return @mysqil_insert_id($link_identifier);
         }
     }
 
@@ -686,10 +722,13 @@ class database {
     */
     function dbError($sql='')
     {
-        if (mysql_errno()) {
-            $this->_errorlog(@mysql_errno() . ': ' . @mysql_error() . ". SQL in question: $sql");        
+      //if (mysql_errno()) {
+        if (mysqli_errno($this->_db)) {
+          //$this->_errorlog(@mysql_errno() . ': ' . @mysql_error() . ". SQL in question: $sql");
+            $this->_errorlog(@mysqli_errno() . ': ' . @mysqli_error() . ". SQL in question: $sql");
             if ($this->_display_error) {
-                return  @mysql_errno() . ': ' . @mysql_error();
+              //return  @mysql_errno() . ': ' . @mysql_error();
+                return  @mysqli_errno($this->_db) . ': ' . @mysqli_error();
             } else {
                 return 'An SQL error has occurred. Please see error.log for details.';
             }

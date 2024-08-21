@@ -85,7 +85,7 @@ class timerobject {
     * percision of results to two decimal places
     *
     */
-    function timerobject()
+    function __construct()
     {
     }
 

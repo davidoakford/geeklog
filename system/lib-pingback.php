@@ -53,7 +53,7 @@ function PNB_getPingbackUrl ($url)
 
     $retval = '';
 
-    $req =& new HTTP_Request ($url);
+    $req = new HTTP_Request ($url);
     $req->setMethod (HTTP_REQUEST_METHOD_HEAD);
     $req->addHeader ('User-Agent', 'GeekLog/' . VERSION);
 

@@ -5,7 +5,7 @@ CREATE TABLE {$_TABLES['access']} (
   acc_ft_id mediumint(8) NOT NULL default '0',
   acc_grp_id mediumint(8) NOT NULL default '0',
   PRIMARY KEY  (acc_ft_id,acc_grp_id)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[2] = "
@@ -20,7 +20,7 @@ CREATE TABLE {$_TABLES['blocks']} (
   content text,
   allow_autotags tinyint(1) unsigned NOT NULL DEFAULT '0',
   rdfurl varchar(255) default NULL,
-  rdfupdated datetime NOT NULL default '0000-00-00 00:00:00',
+  rdfupdated datetime NOT NULL default '1000-01-01 00:00:00',
   rdflimit smallint(5) unsigned NOT NULL default '0',
   onleft tinyint(3) unsigned NOT NULL default '1',
   phpblockfn varchar(64) default '',
@@ -38,7 +38,7 @@ CREATE TABLE {$_TABLES['blocks']} (
   INDEX blocks_name(name),
   INDEX blocks_onleft(onleft),
   PRIMARY KEY  (bid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[3] = "
@@ -46,7 +46,7 @@ CREATE TABLE {$_TABLES['commentcodes']} (
   code tinyint(4) NOT NULL default '0',
   name varchar(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[4] = "
@@ -54,7 +54,7 @@ CREATE TABLE {$_TABLES['commentmodes']} (
   mode varchar(10) NOT NULL default '',
   name varchar(32) default NULL,
   PRIMARY KEY  (mode)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[5] = "
@@ -79,7 +79,7 @@ CREATE TABLE {$_TABLES['comments']} (
   INDEX comments_rht(rht),
   INDEX comments_date(date),
   PRIMARY KEY  (cid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[6] = "
@@ -87,7 +87,7 @@ CREATE TABLE {$_TABLES['cookiecodes']} (
   cc_value int(8) unsigned NOT NULL default '0',
   cc_descr varchar(20) NOT NULL default '',
   PRIMARY KEY  (cc_value)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[7] = "
@@ -96,7 +96,7 @@ CREATE TABLE {$_TABLES['dateformats']} (
   format varchar(32) default NULL,
   description varchar(64) default NULL,
   PRIMARY KEY  (dfid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[8] = "
@@ -130,7 +130,7 @@ CREATE TABLE {$_TABLES['events']} (
   INDEX events_datestart(datestart),
   INDEX events_dateend(dateend),
   PRIMARY KEY  (eid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[9] = "
@@ -152,7 +152,7 @@ CREATE TABLE {$_TABLES['eventsubmission']} (
   timestart time default NULL,
   timeend time default NULL,
   PRIMARY KEY  (eid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[10] = "
@@ -160,7 +160,7 @@ CREATE TABLE {$_TABLES['featurecodes']} (
   code tinyint(4) NOT NULL default '0',
   name varchar(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[11] = "
@@ -171,7 +171,7 @@ CREATE TABLE {$_TABLES['features']} (
   ft_gl_core tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (ft_id),
   KEY ft_name (ft_name)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[12] = "
@@ -179,7 +179,7 @@ CREATE TABLE {$_TABLES['frontpagecodes']} (
   code tinyint(4) NOT NULL default '0',
   name varchar(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[13] = "
@@ -190,7 +190,7 @@ CREATE TABLE {$_TABLES['group_assignments']} (
   INDEX group_assignments_ug_main_grp_id(ug_main_grp_id),
   INDEX group_assignments_ug_uid(ug_uid),
   KEY ug_main_grp_id (ug_main_grp_id)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[14] = "
@@ -201,7 +201,7 @@ CREATE TABLE {$_TABLES['groups']} (
   grp_gl_core tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (grp_id),
   UNIQUE grp_name (grp_name)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[15] = "
@@ -223,7 +223,7 @@ CREATE TABLE {$_TABLES['links']} (
   INDEX links_category(category),
   INDEX links_date(date),
   PRIMARY KEY  (lid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[16] = "
@@ -236,7 +236,7 @@ CREATE TABLE {$_TABLES['linksubmission']} (
   hits int(11) default NULL,
   date datetime default NULL,
   PRIMARY KEY  (lid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[17] = "
@@ -244,7 +244,7 @@ CREATE TABLE {$_TABLES['maillist']} (
   code int(1) NOT NULL default '0',
   name char(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[18] = "
@@ -274,7 +274,7 @@ CREATE TABLE {$_TABLES['personal_events']} (
   timestart time default NULL,
   timeend time default NULL,
   PRIMARY KEY  (eid,uid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[19] = "
@@ -286,7 +286,7 @@ CREATE TABLE {$_TABLES['plugins']} (
   pi_homepage varchar(128) NOT NULL default '',
   INDEX plugins_enabled(pi_enabled),
   PRIMARY KEY  (pi_name)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[20] = "
@@ -297,7 +297,7 @@ CREATE TABLE {$_TABLES['pollanswers']} (
   votes mediumint(8) unsigned default NULL,
   remark varchar( 255 ) NULL,
   PRIMARY KEY  (qid,aid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[21] = "
@@ -321,7 +321,7 @@ CREATE TABLE {$_TABLES['pollquestions']} (
   INDEX pollquestions_statuscode(statuscode),
   INDEX pollquestions_date(date),
   PRIMARY KEY  (qid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[22] = "
@@ -331,7 +331,7 @@ CREATE TABLE {$_TABLES['pollvoters']} (
   ipaddress varchar(15) NOT NULL default '',
   date int(10) unsigned default NULL,
   PRIMARY KEY  (id)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[23] = "
@@ -339,7 +339,7 @@ CREATE TABLE {$_TABLES['postmodes']} (
   code char(10) NOT NULL default '',
   name char(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[24] = "
@@ -353,7 +353,7 @@ CREATE TABLE {$_TABLES['sessions']} (
   KEY sess_id (sess_id),
   KEY start_time (start_time),
   KEY remote_ip (remote_ip)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[25] = "
@@ -361,7 +361,7 @@ CREATE TABLE {$_TABLES['sortcodes']} (
   code char(4) NOT NULL default '0',
   name char(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[26] = "
@@ -373,7 +373,7 @@ CREATE TABLE {$_TABLES['speedlimit']} (
   PRIMARY KEY (id),
   KEY type_ipaddress (type,ipaddress),
   KEY date (date)
-) TYPE = MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[27] = "
@@ -381,7 +381,7 @@ CREATE TABLE {$_TABLES['statuscodes']} (
   code int(1) NOT NULL default '0',
   name char(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[28] = "
@@ -404,7 +404,7 @@ CREATE TABLE {$_TABLES['stories']} (
   commentcode tinyint(4) NOT NULL default '0',
   trackbackcode tinyint(4) NOT NULL default '0',
   statuscode tinyint(4) NOT NULL default '0',
-  expire DATETIME NOT NULL default '0000-00-00 00:00:00',
+  expire DATETIME NOT NULL default '1000-01-01 00:00:00',
   postmode varchar(10) NOT NULL default 'html',
   advanced_editor_mode tinyint(1) unsigned default '0',
   frontpage tinyint(3) unsigned default '1',
@@ -426,7 +426,7 @@ CREATE TABLE {$_TABLES['stories']} (
   INDEX stories_frontpage(frontpage),
   INDEX stories_in_transit(in_transit),
   PRIMARY KEY  (sid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[29] = "
@@ -439,7 +439,7 @@ CREATE TABLE {$_TABLES['storysubmission']} (
   date datetime default NULL,
   postmode varchar(10) NOT NULL default 'html',
   PRIMARY KEY  (sid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[30] = "
@@ -458,14 +458,14 @@ CREATE TABLE {$_TABLES['syndication']} (
   charset varchar(20) NOT NULL default 'UTF-8',
   language varchar(20) NOT NULL default 'en-gb',
   is_enabled tinyint(1) unsigned NOT NULL default '1',
-  updated datetime NOT NULL default '0000-00-00 00:00:00',
+  updated datetime NOT NULL default '1000-01-01 00:00:00',
   update_info text,
   PRIMARY KEY (fid),
   INDEX syndication_type(type),
   INDEX syndication_topic(topic),
   INDEX syndication_is_enabled(is_enabled),
   INDEX syndication_updated(updated)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[31] = "
@@ -484,7 +484,7 @@ CREATE TABLE {$_TABLES['topics']} (
   perm_members tinyint(1) unsigned NOT NULL default '2',
   perm_anon tinyint(1) unsigned NOT NULL default '2',
   PRIMARY KEY  (tid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[32] = "
@@ -493,7 +493,7 @@ CREATE TABLE {$_TABLES['tzcodes']} (
   offset int(1) default NULL,
   description varchar(64) default NULL,
   PRIMARY KEY  (tz)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[33] = "
@@ -503,7 +503,7 @@ CREATE TABLE {$_TABLES['usercomment']} (
   commentorder varchar(4) NOT NULL default 'ASC',
   commentlimit mediumint(8) unsigned NOT NULL default '100',
   PRIMARY KEY  (uid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[34] = "
@@ -519,7 +519,7 @@ CREATE TABLE {$_TABLES['userindex']} (
   INDEX userindex_noboxes(noboxes),
   INDEX userindex_maxstories(maxstories),
   PRIMARY KEY  (uid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[35] = "
@@ -534,7 +534,7 @@ CREATE TABLE {$_TABLES['userinfo']} (
   lastgranted int(10) unsigned NOT NULL default '0',
   lastlogin VARCHAR(10) NOT NULL default '0',
   PRIMARY KEY  (uid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[36] = "
@@ -549,7 +549,7 @@ CREATE TABLE {$_TABLES['userprefs']} (
   emailfromuser tinyint(1) NOT NULL default '1',
   showonline tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (uid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[37] = "
@@ -563,7 +563,7 @@ CREATE TABLE {$_TABLES['users']} (
   email varchar(96) default NULL,
   homepage varchar(96) default NULL,
   sig varchar(160) NOT NULL default '',
-  regdate datetime NOT NULL default '0000-00-00 00:00:00',
+  regdate datetime NOT NULL default '1000-01-01 00:00:00',
   photo varchar(128) DEFAULT NULL,
   cookietimeout int(8) unsigned default '28800',
   theme varchar(64) default NULL,
@@ -577,7 +577,7 @@ CREATE TABLE {$_TABLES['users']} (
   INDEX users_email(email),
   INDEX users_passwd(passwd),
   INDEX users_pwrequestid(pwrequestid)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[38] = "
@@ -585,7 +585,7 @@ CREATE TABLE {$_TABLES['vars']} (
   name varchar(20) NOT NULL default '',
   value varchar(128) default NULL,
   PRIMARY KEY  (name)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[39] = "
@@ -594,7 +594,7 @@ CREATE TABLE {$_TABLES['article_images']} (
   ai_img_num tinyint(2) unsigned NOT NULL,
   ai_filename varchar(128) NOT NULL,
   PRIMARY KEY (ai_sid,ai_img_num)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[40] = "
@@ -608,12 +608,13 @@ CREATE TABLE {$_TABLES['trackback']} (
   date datetime default NULL,
   type varchar(30) NOT NULL default 'article',
   ipaddress varchar(15) NOT NULL default '',
-  PRIMARY KEY (cid),
+  PRIMARY KEY (cid)
+  ,
   INDEX trackback_sid(sid),
-  INDEX trackback_url(url),
+  INDEX trackback_url(url(64)),
   INDEX trackback_type(type),
   INDEX trackback_date(date)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[41] = "
@@ -626,7 +627,7 @@ CREATE TABLE {$_TABLES['pingservice']} (
   is_enabled tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (pid),
   INDEX pingservice_is_enabled(is_enabled)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[42] = "
@@ -636,7 +637,7 @@ CREATE TABLE {$_TABLES['staticpage']} (
   sp_title varchar(128) NOT NULL default '',
   sp_content text NOT NULL,
   sp_hits mediumint(8) unsigned NOT NULL default '0',
-  sp_date datetime NOT NULL default '0000-00-00 00:00:00',
+  sp_date datetime NOT NULL default '1000-01-01 00:00:00',
   sp_format varchar(20) NOT NULL default '',
   sp_onmenu tinyint(1) unsigned NOT NULL default '0',
   sp_label varchar(64) default NULL,
@@ -661,7 +662,7 @@ CREATE TABLE {$_TABLES['staticpage']} (
   KEY staticpage_sp_centerblock (sp_centerblock),
   KEY staticpage_sp_tid (sp_tid),
   KEY staticpage_sp_where (sp_where)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[43] = "
@@ -669,7 +670,7 @@ CREATE TABLE {$_TABLES['spamx']} (
   name varchar(20) NOT NULL default '',
   value varchar(255) NOT NULL default '',
   INDEX spamx_name(name)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_SQL[44] = "
@@ -677,7 +678,7 @@ CREATE TABLE {$_TABLES['trackbackcodes']} (
   code tinyint(4) NOT NULL default '0',
   name varchar(32) default NULL,
   PRIMARY KEY  (code)
-) TYPE=MyISAM
+) ENGINE = INNODB
 ";
 
 $_DATA[] = "INSERT INTO {$_TABLES['access']} (acc_ft_id, acc_grp_id) VALUES (1,3) ";
@@ -704,15 +705,15 @@ $_DATA[] = "INSERT INTO {$_TABLES['access']} (acc_ft_id, acc_grp_id) VALUES (23,
 $_DATA[] = "INSERT INTO {$_TABLES['access']} (acc_ft_id, acc_grp_id) VALUES (24,3) ";
 $_DATA[] = "INSERT INTO {$_TABLES['access']} (acc_ft_id, acc_grp_id) VALUES (25,17) ";
 
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (1,1,'user_block','gldefault','User Functions','all',2,'','','0000-00-00 00:00:00',1,'',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (2,1,'admin_block','gldefault','Admins Only','all',1,'','','0000-00-00 00:00:00',1,'',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (3,1,'section_block','gldefault','Topics','all',0,'','','0000-00-00 00:00:00',1,'',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (4,1,'polls_block','phpblock','Poll','all',2,'','','0000-00-00 00:00:00',0,'phpblock_polls',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (5,1,'events_block','phpblock','Events','all',4,'','','0000-00-00 00:00:00',1,'phpblock_calendar',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (6,1,'whats_new_block','gldefault','What\'s New','all',3,'','','0000-00-00 00:00:00',0,'',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (7,1,'first_block','normal','About Geeklog','homeonly',1,'<p><b>Welcome to Geeklog!</b><p>If you\'re already familiar with Geeklog - and especially if you\'re not: There have been many improvements to Geeklog since earlier versions that you might want to read up on. Please read the <a href=\"docs/changes.html\">release notes</a>. If you need help, please see the <a href=\"docs/support.html\">support options</a>.','','0000-00-00 00:00:00',0,'',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (8,1,'whosonline_block','phpblock','Who\'s Online','all',0,'','','0000-00-00 00:00:00',0,'phpblock_whosonline',4,2,3,3,2,2) ";
-$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (9,1,'older_stories','gldefault','Older Stories','all',5,'','','0000-00-00 00:00:00',1,'',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (1,1,'user_block','gldefault','User Functions','all',2,'','','1000-01-01 00:00:00',1,'',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (2,1,'admin_block','gldefault','Admins Only','all',1,'','','1000-01-01 00:00:00',1,'',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (3,1,'section_block','gldefault','Topics','all',0,'','','1000-01-01 00:00:00',1,'',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (4,1,'polls_block','phpblock','Poll','all',2,'','','1000-01-01 00:00:00',0,'phpblock_polls',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (5,1,'events_block','phpblock','Events','all',4,'','','1000-01-01 00:00:00',1,'phpblock_calendar',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (6,1,'whats_new_block','gldefault','What\'s New','all',3,'','','1000-01-01 00:00:00',0,'',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (7,1,'first_block','normal','About Geeklog','homeonly',1,'<p><b>Welcome to Geeklog!</b><p>If you\'re already familiar with Geeklog - and especially if you\'re not: There have been many improvements to Geeklog since earlier versions that you might want to read up on. Please read the <a href=\"docs/changes.html\">release notes</a>. If you need help, please see the <a href=\"docs/support.html\">support options</a>.','','1000-01-01 00:00:00',0,'',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (8,1,'whosonline_block','phpblock','Who\'s Online','all',0,'','','1000-01-01 00:00:00',0,'phpblock_whosonline',4,2,3,3,2,2) ";
+$_DATA[] = "INSERT INTO {$_TABLES['blocks']} (bid, is_enabled, name, type, title, tid, blockorder, content, rdfurl, rdfupdated, onleft, phpblockfn, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES (9,1,'older_stories','gldefault','Older Stories','all',5,'','','1000-01-01 00:00:00',1,'',4,2,3,3,2,2) ";
 
 $_DATA[] = "INSERT INTO {$_TABLES['commentcodes']} (code, name) VALUES (0,'Comments Enabled') ";
 $_DATA[] = "INSERT INTO {$_TABLES['commentcodes']} (code, name) VALUES (-1,'Comments Disabled') ";
@@ -878,7 +879,7 @@ $_DATA[] = "INSERT INTO {$_TABLES['stories']} (sid, uid, draft_flag, tid, date, 
 
 $_DATA[] = "INSERT INTO {$_TABLES['storysubmission']} (sid, uid, tid, title, introtext, date, postmode) VALUES ('security-reminder',2,'Geeklog','Are you secure?','<p>This is a reminder to secure your site once you have Geeklog up and running. What you should do:</p>\r\r<ol>\r<li>Change the default password for the Admin account.</li>\r<li>Remove the install directory (you won\'t need it any more).</li>\r</ol>',NOW(),'html') ";
 
-$_DATA[] = "INSERT INTO {$_TABLES['syndication']} (type, topic, header_tid, format, limits, content_length, title, description, filename, charset, language, is_enabled, updated, update_info) VALUES ('geeklog', '::all', 'all', 'RSS-2.0', 10, 1, 'Geeklog Site', 'Another Nifty Geeklog Site', 'geeklog.rss', 'iso-8859-1', 'en-gb', 1, '0000-00-00 00:00:00', NULL)";
+$_DATA[] = "INSERT INTO {$_TABLES['syndication']} (type, topic, header_tid, format, limits, content_length, title, description, filename, charset, language, is_enabled, updated, update_info) VALUES ('geeklog', '::all', 'all', 'RSS-2.0', 10, 1, 'Geeklog Site', 'Another Nifty Geeklog Site', 'geeklog.rss', 'iso-8859-1', 'en-gb', 1, '1000-01-01 00:00:00', NULL)";
 
 $_DATA[] = "INSERT INTO {$_TABLES['topics']} (tid, topic, imageurl, sortnum, limitnews, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES ('General','General News','/images/topics/topic_news.gif',1,10,6,2,3,2,2,2)";
 $_DATA[] = "INSERT INTO {$_TABLES['topics']} (tid, topic, imageurl, sortnum, limitnews, group_id, owner_id, perm_owner, perm_group, perm_members, perm_anon) VALUES ('Geeklog','Geeklog','/images/topics/topic_gl.gif',2,10,6,2,3,2,2,2)";

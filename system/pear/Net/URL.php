@@ -103,10 +103,10 @@ class Net_URL
     *
     * @see __construct()
     */
-    function Net_URL($url = null, $useBrackets = true)
-    {
-        $this->__construct($url, $useBrackets);
-    }
+//dro:    function __construct($url = null, $useBrackets = true)
+//dro:    {
+//dro:        $this->__construct($url, $useBrackets);
+//dro:    }
 
     /**
     * PHP5 Constructor
@@ -181,7 +181,7 @@ class Net_URL
                         break;
 
                     case 'path':
-                        if ($value{0} == '/') {
+                        if ($value[0] == '/') {
                             $this->path = $value;
                         } else {
                             $path = dirname($this->path) == DIRECTORY_SEPARATOR ? '' : dirname($this->path);

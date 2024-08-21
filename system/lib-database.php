@@ -147,7 +147,7 @@ function DB_setdebug($flag)
     $_DB->setVerbose($flag);
 }
 
-/** Setting this on will return the SQL error message. 
+/** Setting this on will return the SQL error message.
 * Default is to not display or return the SQL error but
 * to record it in the error.log file
 *
@@ -161,7 +161,7 @@ function DB_displayError($flag)
 }
 
 /**
-* Executes a query on the db server 
+* Executes a query on the db server
 *
 * This executes the passed SQL and returns the recordset or errors out
 *
@@ -186,8 +186,7 @@ function DB_query ($sql, $ignore_errors = 0)
             die ('An SQL error has occurred. Please see error.log for details.');
         }
     }
-
-    return $_DB->dbQuery ($sql, $ignore_errors);
+    return $_DB->dbQuery($sql, $ignore_errors);
 }
 
 /**
@@ -203,7 +202,7 @@ function DB_query ($sql, $ignore_errors = 0)
 * @param        string      $return_page    URL to send user to when done
 *
 */
-function DB_save($table,$fields,$values,$return_page='') 
+function DB_save($table,$fields,$values,$return_page='')
 {
     global $_DB,$_TABLES,$_CONF;
 
@@ -247,15 +246,21 @@ function DB_delete($table,$id,$value,$return_page='')
 * @return       mixed       Returns value sought
 *
 */
-function DB_getItem($table,$what,$selection='') 
+function DB_getItem($table,$what,$selection='')
 {
     if (!empty($selection)) {
         $result = DB_query("SELECT $what FROM $table WHERE $selection");
     } else {
         $result = DB_query("SELECT $what FROM $table");
     }
+
     $ITEM = DB_fetchArray($result, true);
-    return $ITEM[0];
+
+    if ($ITEM) {
+      return $ITEM[0];
+    } else {
+      return $ITEM;
+    }
 }
 
 /**
@@ -265,15 +270,15 @@ function DB_getItem($table,$what,$selection='')
 * redirect user to another page if told to do so
 *
 * @param        string          $table              Table to perform change on
-* @param        string          $item_to_set        field name to set 
-* @param        string          $value_to_set       Value to set abovle field to 
-* @param        array|string    $id                 field name(s) to use in where clause 
+* @param        string          $item_to_set        field name to set
+* @param        string          $value_to_set       Value to set abovle field to
+* @param        array|string    $id                 field name(s) to use in where clause
 * @param        array|string    $value              Value(s) to use in where clause
 * @param	    string          $return_page        page to send user to when done with change
 * @param        boolean         $supress_quotes     whether or not to use single quotes in where clause
 *
 */
-function DB_change($table,$item_to_set,$value_to_set,$id='',$value='',$return_page='',$supress_quotes=false) 
+function DB_change($table,$item_to_set,$value_to_set,$id='',$value='',$return_page='',$supress_quotes=false)
 {
     global $_DB,$_TABLES,$_CONF;
 
@@ -296,7 +301,7 @@ function DB_change($table,$item_to_set,$value_to_set,$id='',$value='',$return_pa
 * @return       int     Returns row count from generated SQL
 *
 */
-function DB_count($table,$id='',$value='') 
+function DB_count($table,$id='',$value='')
 {
     global $_DB;
 
@@ -313,12 +318,12 @@ function DB_count($table,$id='',$value='')
 * @param        string          $fields         Comma delmited list of fields to copy over
 * @param        string          $values         Values to store in database field
 * @param        string          $tablefrom      Table to get record from
-* @param        array|string   	$id             Field name(s) to use in where clause 
+* @param        array|string   	$id             Field name(s) to use in where clause
 * @param        array|string    $value          Value(s) to use in where clause
 * @param        string          $return_page    Page to send user to when done
 *
 */
-function DB_copy($table,$fields,$values,$tablefrom,$id,$value,$return_page='') 
+function DB_copy($table,$fields,$values,$tablefrom,$id,$value,$return_page='')
 {
     global $_DB,$_TABLES,$_CONF;
 
@@ -425,8 +430,8 @@ function DB_affectedRows($recordset)
 function DB_fetchArray($recordset, $both = true)
 {
     global $_DB;
-
-    return $_DB->dbFetchArray($recordset, $both);
+    $a = $_DB->dbFetchArray($recordset, $both);
+    return $a;
 }
 
 /**
@@ -468,7 +473,7 @@ function DB_error()
 * @return   boolean     returns true on success otherwise false
 *
 */
-function DB_createDatabaseStructures() 
+function DB_createDatabaseStructures()
 {
     global $_DB;
 
@@ -482,7 +487,7 @@ function DB_createDatabaseStructures()
 * @return       boolean     returns true on success otherwise false
 *
 */
-function DB_doDatabaseUpgrade($current_gl_version) 
+function DB_doDatabaseUpgrade($current_gl_version)
 {
     global $_DB;
 

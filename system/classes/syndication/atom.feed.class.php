@@ -56,7 +56,7 @@
       */
     var $_currentItem;
 
-    function Atom03()
+    function __construct()
     {
       $this->FeedParserBase();
       $this->_inItem = false;
@@ -261,7 +261,7 @@
       */
     var $_currentItem;
 
-    function Atom10()
+    function __construct()
     {
       $this->FeedParserBase();
       $this->_inItem = false;

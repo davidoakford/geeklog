@@ -55,7 +55,7 @@
       */
     var $_currentItem;
 
-    function RDF()
+    function __construct()
     {
       $this->FeedParserBase();
       $this->_inItem = false;

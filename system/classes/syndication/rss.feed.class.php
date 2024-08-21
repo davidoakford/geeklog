@@ -61,7 +61,7 @@
       */
     var $_currentItem;
 
-    function RSS0x()
+    function __construct()
     {
       $this->FeedParserBase();
       $this->_inItem = false;
@@ -258,9 +258,9 @@
       */
     var $_linkGUID;
 
-    function RSS20()
+    function __construct()
     {
-      $this->FeedParserBase();
+      parent::__construct();
       $this->_inItem = false;
       $this->_linkGUID = false;
     }

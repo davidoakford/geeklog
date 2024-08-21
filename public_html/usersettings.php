@@ -62,7 +62,7 @@ function edituser()
                                    'photo'         => 'userphoto.thtml',
                                    'username'      => 'username.thtml',
                                    'deleteaccount' => 'deleteaccount.thtml'));
-                                   
+
     include ($_CONF['path_system'] . 'classes/navbar.class.php');
     $navbar = new navbar;
     $navbar->add_menuitem($LANG04[151],'showhideProfileEditorDiv("preview",0);return false;',true);
@@ -73,14 +73,14 @@ function edituser()
     $navbar->add_menuitem($LANG04[155],'showhideProfileEditorDiv("privacy",5);return false;',true);
     $navbar->set_selected($LANG04[152]);
     $preferences->set_var ('navbar', $navbar->generate());
-                                   
+
     $preferences->set_var ('site_url', $_CONF['site_url']);
     $preferences->set_var ('layout_url', $_CONF['layout_url']);
     $preferences->set_var ('no_javascript_warning',$LANG04[150]);
 
     $preferences->set_var ('cssid1', 1);
     $preferences->set_var ('cssid2', 2);
-    
+
     $preferences->set_var ('preview', userprofile($_USER['uid']));
     $preferences->set_var ('prefs', editpreferences());
 
@@ -255,14 +255,14 @@ function confirmAccountDelete ($form_reqid)
         // not found - abort
         return COM_refresh ($_CONF['site_url'] . '/index.php');
     }
-    
+
     // to change the password, email address, or cookie timeout,
     // we need the user's current password
     if (empty ($_POST['old_passwd']) ||
             (md5 ($_POST['old_passwd']) != $_USER['passwd'])) {
          return COM_refresh ($_CONF['site_url']
                             . '/usersettings.php?mode=edit&msg=84');
-    }    
+    }
 
     $reqid = substr (md5 (uniqid (rand (), 1)), 1, 16);
     DB_change ($_TABLES['users'], 'pwrequestid', "$reqid",
@@ -429,7 +429,7 @@ function editpreferences()
 
     $preferences->set_var ('lang_authors_exclude', $LANG04[46]);
     $preferences->set_var ('lang_boxes_exclude', $LANG04[47]);
-    
+
     $preferences->set_var ('start_block_display',
             COM_startBlock ($LANG04[45] . ' ' . $display_name));
     $preferences->set_var ('start_block_digest',
@@ -508,7 +508,7 @@ function editpreferences()
 
         $themeFiles = COM_getThemes ();
         usort ($themeFiles,
-               create_function ('$a,$b', 'return strcasecmp($a,$b);'));
+               function ($a,$b) {return strcasecmp($a,$b);});
 
         foreach ($themeFiles as $theme) {
             $selection .= '<option value="' . $theme . '"';
@@ -518,9 +518,9 @@ function editpreferences()
             $words = explode ('_', $theme);
             $bwords = array ();
             foreach ($words as $th) {
-                if ((strtolower ($th{0}) == $th{0}) &&
-                    (strtolower ($th{1}) == $th{1})) {
-                    $bwords[] = strtoupper ($th{0}) . substr ($th, 1);
+                if ((strtolower ($th[0]) == $th[0]) &&
+                    (strtolower ($th[1]) == $th[1])) {
+                    $bwords[] = strtoupper ($th[0]) . substr ($th, 1);
                 } else {
                     $bwords[] = $th;
                 }
@@ -903,10 +903,10 @@ function saveuser($A)
     }
 
     if (!empty ($A['passwd'])) {
-        if (($A['passwd'] == $A['passwd_conf']) 
+        if (($A['passwd'] == $A['passwd_conf'])
                 AND (md5 ($A['old_passwd']) == $_USER['passwd'])) {
             $passwd = md5 ($A['passwd']);
-            DB_change($_TABLES['users'], 'passwd', 
+            DB_change($_TABLES['users'], 'passwd',
                       "$passwd", "uid", $_USER['uid']);
             if ($A['cooktime'] > 0) {
                 $cooktime = $A['cooktime'];
@@ -915,7 +915,7 @@ function saveuser($A)
             }
             setcookie ($_CONF['cookie_password'], $passwd, time() + $cooktime,
                        $_CONF['cookie_path'], $_CONF['cookiedomain'],
-                       $_CONF['cookiesecure']);        
+                       $_CONF['cookiesecure']);
         }
         elseif (md5 ($A['old_passwd']) != $_USER['passwd']) {
                 return COM_refresh ($_CONF['site_url']
@@ -1091,7 +1091,7 @@ function userprofile ($user, $msg = 0)
         $user_templates->set_var ('username', $A['username']);
         $user_templates->set_var ('user_fullname', $A['fullname']);
     }
-    
+
     if (SEC_hasRights('user.edit')) {
         global $_IMAGE_TYPE, $LANG_ADMIN;
         $edit_icon = '<img src="' . $_CONF['layout_url'] . '/images/edit.'
@@ -1403,7 +1403,7 @@ function savepreferences($A)
 
 // MAIN
 $mode = '';
-if (isset($_POST['btncancel']) AND $_POST['btncancel'] == $LANG_ADMIN['cancel']) { 
+if (isset($_POST['btncancel']) AND $_POST['btncancel'] == $LANG_ADMIN['cancel']) {
     echo COM_refresh($_CONF['site_url']);
     exit;
 } else if (isset($_POST['btnsubmit']) AND ($_POST['btnsubmit'] == $LANG04[96]) && ($_POST['mode'] != 'deleteconfirmed')) {
@@ -1432,7 +1432,7 @@ if (isset ($_USER['uid']) && ($_USER['uid'] > 1)) {
         break;
 
     case 'saveuser':
-        savepreferences ($_POST);     
+        savepreferences ($_POST);
         $display .= saveuser($_POST);
         PLG_profileExtrasSave ();
         break;

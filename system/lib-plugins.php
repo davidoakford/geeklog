@@ -723,10 +723,11 @@ function PLGINT_getOptionsforMenus($var_names, $required_names, $function_name)
     foreach ($_PLUGINS as $pi_name) {
         $function = $function_name . $pi_name;
         if (function_exists ($function)) {
+
             $plg_array = $function();
-            if (($plg_array !== false) && (count ($plg_array) > 0)) {
-                // Check if plugin is returning a single record array or multiple records
-                $entries = count ($plg_array[0]);
+
+            if ((!is_null($plg_array)) && ($plg_array !== false) && (count ($plg_array) > 0)) {
+                $entries = count ($plg_array);
                 if ($entries == 0) {
                     $sets_array = array ();
                 } else if ($entries == 1) {
@@ -741,11 +742,11 @@ function PLGINT_getOptionsforMenus($var_names, $required_names, $function_name)
                     $good_array = true;
                     for ($n = 0; $n < count($var_names); $n++) {
                         if (isset ($val[$n])) {
-                            $plugin->$var_names[$n] = $val[$n];
+                            $plugin->var_names[$n] = $val[$n];
                         } else {
-                            $plugin->$var_names[$n] = '';
+                            $plugin->var_names[$n] = '';
                         }
-                        if (empty ($plugin->$var_names[$n]) && $required_names[$n]) {
+                        if (empty ($plugin->var_names[$n]) && $required_names[$n]) {
                             $good_array = false;
                         }
                     }
